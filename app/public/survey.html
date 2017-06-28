@@ -13,21 +13,152 @@
 			<hr>
 			<h3>About You</h3>
 			<h4>Name (Required)</h4>
-				<input type="text" name="" id="name" class="form-control" required="">
-		<h4>Link to Photo Image (Required)</h4>
+			<input type="text" name="" id="name" class="form-control" required="">
+			<h4>Link to Photo Image (Required)</h4>
 			<input type="text" name="" id="photo" class="form-control" required="">
+			
+			<h3>Question 1</h3>
+			<h4>The science of time travel is important to me.</h4>
+			<select data-placeholder="" class="selection" id="q1">
+				<option>1 (Strongly Disagree) </option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 2</h3>
+			<h4>I enjoy spending time in dank pits.</h4>
+			<select data-placeholder="" class="selection" id="q2">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 3</h3>
+			<h4>I believe that the moon landing was staged.</h4>
+			<select data-placeholder="" class="selection" id="q3">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 4</h3>
+			<h4>I think that shoving people is ok as long as it is in the dark.</h4>
+			<select data-placeholder="" class="selection" id="q4">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 5</h3>
+			<h4>Basic hygiene is not something I spend a lot of time worrying about.</h4>
+			<select data-placeholder="" class="selection" id="q5">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 6</h3>
+			<h4>I strongly believe that Bigfoot exists, and that he is secretely manipulating the New York Stock Exchange.</h4>
+			<select data-placeholder="" class="selection" id="q6">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 7</h3>
+			<h4>I looooooooove Cinnamon Toast Crunch.</h4>
+			<select data-placeholder="" class="selection" id="q7">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 8</h3>
+			<h4>I think that stamp collecting is a great hobby, as long as it is done by consenting adults and no one gets hurt. </h4>
+			<select data-placeholder="" class="selection" id="q8">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 9</h3>
+			<h4>I think that we should put pictures of Bumble Bees on nickles. That way people can say 'gimmie 5 bees for a quarter'.</h4>
+			<select data-placeholder="" class="selection" id="q9">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>
+			
+			<h3>Question 10</h3>
+			<h4>I can do 50 push-ups in 20 minutes</h4>
+			<select data-placeholder="" class="selection" id="q10">
+				<option>1 (Strongly Disagree</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5 (Strongly Agree) </option>
+			</select>	
 
-		<h3>Question 1</h3>
-  		<h4>I really love being outside in Nature</h4>
-		
-		<select data-placeholder="" class="selection" id="q1">
-			<option>1 (Strongly Disagree) </option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5 (Strongly Agree) </option>	
-		</select>
+			<p><a class="btn btn-primary btn-lg glyphicon glyphicon-list-alt" href="/survey" role="button" id="submit">Submit</a></p>	
+			
 		</div>
+		
+		<!--scripts -->
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#submit').on("click",function(event){
+					event.preventDefault();
+					function dataValidation() {
+						var valid = true;
+						$('.form-control').each(function(){
+							if ($(this).val() === '') {
+								valid = false;
+							}
+						});
+						$('.selection').each(function(){
+							if($(this).val() === '') {
+								valid =false;
+							}
+						});
+						return valid;
+					}
+					if (dataValidation() == true){
+						var newUser = {
+					name: $("#name").val().trim(),
+					photo: $("#photo").val().trim(),
+					scores: [$("#q1").val(),$('#q2').val(),$('#q3').val(),$('#q4').val(),$('#q5').val(),$('#q6').val(),$('#q7').val(),$('#q8').val(),$('#q9').val(),$('#q10').val()]
+					};
+					}
+					else{
+						console.log('Please fill out the form fully');
+					}
+					$.post("/api/friends", newUser, function (data){
+				console.log(data);
+				// $('#matchFriendName').text(data.name);
+				//$("#matchPic").attr("src", data.photo);
+				});
+				});
+			});
+		</script>
 		
 	</body>
 </html>
